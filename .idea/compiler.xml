@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="app" />
+        <module name="external-api-service" />
+        <module name="auth-service" />
+        <module name="flight-search-service" />
+        <module name="payment-service" />
+        <module name="auditing-service" />
+        <module name="booking-service" />
+        <module name="hotel-search-service" />
+        <module name="notification-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
