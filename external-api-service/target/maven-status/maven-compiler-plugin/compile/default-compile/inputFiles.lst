@@ -1,2 +1,10 @@
-D:\Developing\Projects\TripTrekker_Lite\external-api-service\src\main\java\com\mentor\triptrekker\externalapi\service\ExternalApiService.java
-D:\Developing\Projects\TripTrekker_Lite\external-api-service\src\main\java\com\mentor\triptrekker\externalapi\config\WebClientConfig.java
+D:\TripTrekker_Lite\external-api-service\src\main\java\com\mentor\triptrekker\externalapi\config\WebClientConfig.java
+D:\TripTrekker_Lite\external-api-service\src\main\java\com\mentor\triptrekker\externalapi\service\ExternalApiService.java
+D:\TripTrekker_Lite\external-api-service\src\main\java\com\mentor\triptrekker\externalapi\response\FlightOffer.java
+D:\TripTrekker_Lite\external-api-service\src\main\java\com\mentor\triptrekker\externalapi\controller\FlightController.java
+D:\TripTrekker_Lite\external-api-service\src\main\java\com\mentor\triptrekker\externalapi\response\Segment.java
+D:\TripTrekker_Lite\external-api-service\src\main\java\com\mentor\triptrekker\externalapi\response\Itinerary.java
+D:\TripTrekker_Lite\external-api-service\src\main\java\com\mentor\triptrekker\externalapi\request\FlightRequest.java
+D:\TripTrekker_Lite\external-api-service\src\main\java\com\mentor\triptrekker\externalapi\response\FlightResponse.java
+D:\TripTrekker_Lite\external-api-service\src\main\java\com\mentor\triptrekker\externalapi\exception\FlightSearchException.java
+D:\TripTrekker_Lite\external-api-service\src\main\java\com\mentor\triptrekker\externalapi\controller\GlobalExceptionHandler.java
