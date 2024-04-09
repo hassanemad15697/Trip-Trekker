@@ -21,6 +21,5 @@ public class FlightController {
         return externalApiService.searchFlights(request)
                 .map(response -> ResponseEntity.ok().body(response))
                 .defaultIfEmpty(ResponseEntity.status(HttpStatus.NO_CONTENT).build());
-//                .onErrorResume(FlightSearchException.class, ex -> Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new FlightResponse())));
     }
 }
