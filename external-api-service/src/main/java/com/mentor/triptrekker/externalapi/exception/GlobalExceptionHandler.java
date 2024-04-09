@@ -1,4 +1,4 @@
-package com.mentor.triptrekker.externalapi.controller;
+package com.mentor.triptrekker.externalapi.exception;
 import com.mentor.triptrekker.externalapi.exception.FlightSearchException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

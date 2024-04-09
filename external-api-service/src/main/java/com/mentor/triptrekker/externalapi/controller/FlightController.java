@@ -1,8 +1,7 @@
 package com.mentor.triptrekker.externalapi.controller;
 
-import com.mentor.triptrekker.externalapi.exception.FlightSearchException;
 import com.mentor.triptrekker.externalapi.request.FlightRequest;
-import com.mentor.triptrekker.externalapi.response.FlightResponse;
+import com.mentor.triptrekker.externalapi.response.FlightOfferResponse;
 import com.mentor.triptrekker.externalapi.service.ExternalApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,7 @@ public class FlightController {
     private final ExternalApiService externalApiService;
 
     @PostMapping("/search")
-    public Mono<ResponseEntity<FlightResponse>> searchFlights(@RequestBody FlightRequest request) {
+    public Mono<ResponseEntity<FlightOfferResponse>> searchFlights(@RequestBody FlightRequest request) {
         return externalApiService.searchFlights(request)
                 .map(response -> ResponseEntity.ok().body(response))
                 .defaultIfEmpty(ResponseEntity.status(HttpStatus.NO_CONTENT).build());
