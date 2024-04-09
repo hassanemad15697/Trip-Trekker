@@ -20,4 +20,10 @@ public class HotelController {
 
     private final ExternalApiService externalApiService;
 
+//    @PostMapping("/search")
+//    public Mono<ResponseEntity<HotelOfferResponse>> searchFlights(@RequestBody HotelRequest request) {
+//        return externalApiService.searchHotel(request)
+//                .map(response -> ResponseEntity.ok().body(response))
+//                .defaultIfEmpty(ResponseEntity.status(HttpStatus.NO_CONTENT).build());
+//    }
 }
