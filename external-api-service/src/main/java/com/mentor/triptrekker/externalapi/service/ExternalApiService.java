@@ -69,7 +69,7 @@ public class ExternalApiService {
                     .retrieve()
                     .bodyToMono(FlightOfferResponse.class)
                     .onErrorResume(e -> {
-                        log.error("Error fetching flight data: {} \n {}", e.getMessage(), e.getStackTrace());
+//                        log.error("Error fetching flight data: {} \n {}", e.getMessage(), e.getStackTrace());
                         return Mono.error(new FlightSearchException("Error fetching flight data. : " + e.getMessage()));
                     });
         });
