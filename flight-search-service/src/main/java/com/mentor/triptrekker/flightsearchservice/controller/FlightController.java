@@ -23,7 +23,6 @@ public class FlightController {
     public Mono<ResponseEntity<FlightResponse>> searchFlightsForGuestUser(@RequestBody FlightRequest request) {
 
         return flightSearchService.searchFlightsForGuestUser(request)
-
                 .map(response -> ResponseEntity.ok().body(response))
                 .defaultIfEmpty(ResponseEntity.status(HttpStatus.NO_CONTENT).build());
 //                .onErrorResume(FlightSearchException.class, ex -> Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new FlightResponse())));
