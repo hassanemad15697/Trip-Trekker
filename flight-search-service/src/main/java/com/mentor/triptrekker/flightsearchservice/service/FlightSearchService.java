@@ -17,7 +17,7 @@ public class FlightSearchService {
 
     @Cacheable(value = "flightSearchData", key = "#guestUserId + '-' + #searchCriteria.hashCode()")
     public Mono<FlightResponse> searchFlightsForGuestUser(FlightRequest request) {
-        return flightExternalApiIntegration.searchFlights(request);
+        return  flightExternalApiIntegration.searchFlights(request);
     }
 
     @Cacheable(value = "flightSearchCriteria", key = "#loggedInUser + '-' + #searchCriteria.hashCode()")
