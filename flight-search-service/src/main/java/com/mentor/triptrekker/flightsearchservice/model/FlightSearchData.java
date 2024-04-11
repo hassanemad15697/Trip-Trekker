@@ -1,6 +1,6 @@
-package flightsearchservice.model;
+package com.mentor.triptrekker.flightsearchservice.model;
 
-import flightsearchservice.response.FlightResponse;
+import com.mentor.triptrekker.flightsearchservice.response.FlightResponse;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 

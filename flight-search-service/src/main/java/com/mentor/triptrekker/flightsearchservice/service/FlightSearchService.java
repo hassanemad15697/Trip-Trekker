@@ -1,49 +1,30 @@
-package flightsearchservice.service;
+package com.mentor.triptrekker.flightsearchservice.service;
 
-import flightsearchservice.config.WebClientConfig;
-import flightsearchservice.request.FlightRequest;
-import flightsearchservice.response.FlightResponse;
+import com.mentor.triptrekker.flightsearchservice.config.WebClientConfig;
+import com.mentor.triptrekker.flightsearchservice.integration.FlightExternalApiIntegration;
+import com.mentor.triptrekker.flightsearchservice.request.FlightRequest;
+import com.mentor.triptrekker.flightsearchservice.response.FlightResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
 public class FlightSearchService {
-    private final WebClientConfig webClientConfig;
+    private final FlightExternalApiIntegration flightExternalApiIntegration;
 
-    public void searchFlightsForGuest() {
 
+    @Cacheable(value = "flightSearchData", key = "#guestUserId + '-' + #searchCriteria.hashCode()")
+    public Mono<FlightResponse> searchFlightsForGuestUser(FlightRequest request) {
+        return flightExternalApiIntegration.searchFlights(request);
     }
 
-    public Mono<FlightResponse> searchFlights(FlightRequest request) {
-        return this.webClientConfig.webClient().get()
-                .uri(uriBuilder -> uriBuilder.path("/search")
-                        .queryParam("originLocationCode", request.getOriginLocationCode())
-                        .queryParam("destinationLocationCode", request.getDestinationLocationCode())
-                        .queryParam("departureDate", request.getDepartureDate())
-                        .queryParam("returnDate", request.getReturnDate())
-                        .queryParam("adults", request.getAdults())
-                        .queryParam("children", request.getChildren())
-                        .queryParam("infants", request.getInfants())
-                        .queryParam("travelClass", request.getTravelClass())
-                        .queryParam("includedAirlineCodes", request.getIncludedAirlineCodes())
-                        .queryParam("excludedAirlineCodes", request.getExcludedAirlineCodes())
-                        .queryParam("nonStop", request.getNonStop())
-                        .queryParam("currencyCode", request.getCurrencyCode())
-                        .queryParam("maxPrice", request.getMaxPrice())
-                        .queryParam("max", request.getMax())
-                        .build())
-                .retrieve()
-//                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(),
-//                        response -> Mono.error(new FlightSearchException("Error fetching flight data. ")))
-                .bodyToMono(FlightResponse.class)
-//                .onErrorResume(FlightSearchException.class, error -> {
-//                    log.error(error.getMessage()+"\n"+ Arrays.toString(error.getStackTrace()));
-//                    return Mono.just(new FlightResponse());
-//                })
-                ;
-    }
+    @Cacheable(value = "flightSearchCriteria", key = "#loggedInUser + '-' + #searchCriteria.hashCode()")
+    public Mono<FlightResponse> searchFlightsForLoggedInUser(String loggedInUser, FlightRequest request) {
+        return flightExternalApiIntegration.searchFlights(request);
 
+
+    }
 
 }

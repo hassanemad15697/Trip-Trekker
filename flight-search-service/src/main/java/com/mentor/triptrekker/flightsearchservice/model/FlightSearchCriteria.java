@@ -1,4 +1,4 @@
-package flightsearchservice.model;
+package com.mentor.triptrekker.flightsearchservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

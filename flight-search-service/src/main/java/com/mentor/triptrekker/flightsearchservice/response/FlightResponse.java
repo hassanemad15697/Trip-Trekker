@@ -1,4 +1,4 @@
-package flightsearchservice.response;
+package com.mentor.triptrekker.flightsearchservice.response;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

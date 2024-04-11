@@ -1,4 +1,4 @@
-package flightsearchservice.config;
+package com.mentor.triptrekker.flightsearchservice.config;
 
 
 import org.springframework.context.annotation.Bean;

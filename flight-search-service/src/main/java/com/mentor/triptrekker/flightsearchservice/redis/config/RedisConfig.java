@@ -1,4 +1,4 @@
-package flightsearchservice.redis.config;
+package com.mentor.triptrekker.flightsearchservice.redis.config;
 
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
