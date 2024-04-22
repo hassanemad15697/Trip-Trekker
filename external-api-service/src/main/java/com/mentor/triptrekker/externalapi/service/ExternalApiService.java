@@ -7,6 +7,7 @@ import com.mentor.triptrekker.externalapi.response.AccessTokenResponse;
 import com.mentor.triptrekker.externalapi.response.FlightOfferResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class ExternalApiService {
-
-    private final WebClient webClient;
+    private final WebClient externalWebClient;
+    public ExternalApiService(@Qualifier("externalWebClient") WebClient externalWebClient) {
+        this.externalWebClient = externalWebClient;
+    }
     private String accessToken;
     // Method to fetch access token from the authentication endpoint
     private Mono<String> fetchAccessToken() {
@@ -30,7 +32,7 @@ public class ExternalApiService {
         formData.add("client_secret", "ptxT5PaUgBxTb0lG");
         formData.add("grant_type", "client_credentials");
 
-        return webClient.post()
+        return externalWebClient.post()
                 .uri("https://test.api.amadeus.com/v1/security/oauth2/token")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .body(BodyInserters.fromFormData(formData))
@@ -50,7 +52,7 @@ public class ExternalApiService {
 
     public Mono<FlightOfferResponse> searchFlights(FlightRequest request) {
         return getAccessToken().flatMap(token -> {
-            return webClient.get()
+            return externalWebClient.get()
                     .uri(uriBuilder -> uriBuilder.path("shopping/flight-offers")
                             .queryParam("originLocationCode", request.getOriginLocationCode())
                             .queryParam("destinationLocationCode", request.getDestinationLocationCode())
