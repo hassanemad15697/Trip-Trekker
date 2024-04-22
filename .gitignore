@@ -1,0 +1,12 @@
+.idea
+
+./app/target
+./auditing-service/target
+./auth-service/target
+./booking-service/target
+./external-api-service/target
+./flight-search-service/target
+./hotel-search-service/target
+./notification-service/target
+./payment-service/target
+./validation-service/target
