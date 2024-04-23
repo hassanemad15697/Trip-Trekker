@@ -56,7 +56,6 @@ services:
       - D:/Docker/Containers/trip-trekker-authentication-service:/app
     depends_on:
       - postgres
-      - rabbitmq
 
   trip-trekker-booking-service:
     build:
@@ -112,6 +111,7 @@ services:
       - D:/Docker/Containers/trip-trekker-notification-service:/app
     depends_on:
       - postgres
+      - rabbitmq
 
   trip-trekker-payment-service:
     build:
@@ -137,6 +137,7 @@ services:
       - D:/Docker/Containers/trip-trekker-validation-service:/app
     depends_on:
       - postgres
+      - rabbitmq
 
 volumes:
   postgres-data:

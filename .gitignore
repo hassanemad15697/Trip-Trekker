@@ -3,3 +3,4 @@
 
 # Java/Maven/Gradle build folders
 **/target/
+**/*.iml

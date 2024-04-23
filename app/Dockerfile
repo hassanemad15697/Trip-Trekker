@@ -8,7 +8,7 @@ LABEL maintainer="hassanemad15697@gmail.com"
 ARG JAR_FILE=target/*.jar
 
 # Add the application's jar to the container
-COPY ${JAR_FILE} app.jar
+COPY ${JAR_FILE} app-1.0.0.jar
 
 # Run the jar file
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","/app-1.0.0.jar"]
