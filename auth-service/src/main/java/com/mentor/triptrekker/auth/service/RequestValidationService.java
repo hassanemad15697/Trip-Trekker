@@ -19,7 +19,7 @@ public class RequestValidationService {
     public ResponseEntity<?> forwardToValidateService(Object requestToValidate, ValidationType validationType){
         boolean isValidationPassed = callValidationService(requestToValidate, validationType);
         if (isValidationPassed) {
-            return new ResponseEntity<>(HttpStatus.OK); // should be 102 status code
+            return new ResponseEntity<>(HttpStatus.ACCEPTED); // should be 102 status code
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // 400 status code
         }
