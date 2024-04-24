@@ -2,5 +2,6 @@
 .idea/
 
 # Java/Maven/Gradle build folders
-**/target/
+**/target
 **/*.iml
+**/*.jar
