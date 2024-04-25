@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static com.mentor.triptrekker.auth.model.ValidationType.BOOKING_FLIGHT;
 
 @RestController
-@RequestMapping("/api/booking")
+@RequestMapping("api/booking")
 @RequiredArgsConstructor
 public class BookingController {
 
