@@ -1,7 +1,2 @@
 # IntelliJ IDEA project files
 .idea/
-
-# Java/Maven/Gradle build folders
-**/target/*.jar
-**/*.iml
-**/*.jar
