@@ -16,28 +16,37 @@ import static com.mentor.triptrekker.auth.model.Permission.*;
 public enum ROLE {
 
 
+
     USER(Collections.emptySet()),
-    ADMIN(Set.of(
-                    ADMIN_READ,
-                    ADMIN_UPDATE,
-                    ADMIN_DELETE,
-                    ADMIN_CREATE,
-                    MANAGER_READ,
-                    MANAGER_UPDATE,
-                    MANAGER_DELETE,
-                    MANAGER_CREATE
-            )),
-    MANAGER(Set.of(
-                    MANAGER_READ,
-                    MANAGER_UPDATE,
-                    MANAGER_DELETE,
-                    MANAGER_CREATE
-            ));
+    ADMIN(new Object() {
+        Set<Permission> evaluate() {
+            Set<Permission> adminPermissions = new java.util.HashSet<>();
+            adminPermissions.add(ADMIN_READ);
+            adminPermissions.add(ADMIN_UPDATE);
+            adminPermissions.add(ADMIN_DELETE);
+            adminPermissions.add(ADMIN_CREATE);
+            adminPermissions.add(MANAGER_READ);
+            adminPermissions.add(MANAGER_UPDATE);
+            adminPermissions.add(MANAGER_DELETE);
+            adminPermissions.add(MANAGER_CREATE);
+            return adminPermissions;
+        }
+    }.evaluate()),
+    MANAGER(new Object() {
+        Set<Permission> evaluate() {
+            Set<Permission> managerPermissions = new java.util.HashSet<>();
+            managerPermissions.add(MANAGER_READ);
+            managerPermissions.add(MANAGER_UPDATE);
+            managerPermissions.add(MANAGER_DELETE);
+            managerPermissions.add(MANAGER_CREATE);
+            return managerPermissions;
+        }
+    }.evaluate());
 
     private final Set<Permission> permissions;
 
     public List<SimpleGrantedAuthority> getAuthorities() {
-        var authorities = getPermissions()
+        List<SimpleGrantedAuthority> authorities = getPermissions()
                 .stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
                 .collect(Collectors.toList());

@@ -10,8 +10,8 @@ services:
       POSTGRES_DB: trip-trekker
       POSTGRES_USER: trip-trekker
       POSTGRES_PASSWORD: trip-trekker
-    volumes:
-      - D:/Docker/Data/postgres:/var/lib/postgresql/data
+    networks:
+      - app-network
 
   rabbitmq:
     image: rabbitmq:management
@@ -19,125 +19,118 @@ services:
     ports:
       - "5672:5672"  # AMQP
       - "15672:15672"  # RabbitMQ Management UI
-    volumes:
-      - D:/Docker/Data/rabbitmq:/var/lib/rabbitmq
+    networks:
+      - app-network
 
-  trip-trekker-app:
-    build:
-      context: ./app
-      dockerfile: Dockerfile
-    container_name: trip-trekker-app
-    ports:
-      - "8081:8080"
-    volumes:
-      - D:/Docker/Containers/trip-trekker-app:/app
+#  auditing-service:
+#    build:
+#      context: ./auditing-service
+#      dockerfile: Dockerfile
+#    container_name: auditing-service
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgres
+#      - rabbitmq
+#    networks:
+#      - app-network
 
-  trip-trekker-auditing-service:
-    build:
-      context: ./auditing-service
-      dockerfile: Dockerfile
-    container_name: trip-trekker-auditing-service
-    ports:
-      - "8082:8080"
-    volumes:
-      - D:/Docker/Containers/trip-trekker-auditing-service:/app
-    depends_on:
-      - postgres
-      - rabbitmq
-
-  trip-trekker-authentication-service:
+  authentication-service:
     build:
       context: ./auth-service
       dockerfile: Dockerfile
-    container_name: trip-trekker-authentication-service
+    container_name: authentication-service
     ports:
-      - "8083:8080"
-    volumes:
-      - D:/Docker/Containers/trip-trekker-authentication-service:/app
+      - "8081:8081"
     depends_on:
       - postgres
+    networks:
+      - app-network
 
-  trip-trekker-booking-service:
+  booking-service:
     build:
       context: ./booking-service
       dockerfile: Dockerfile
-    container_name: trip-trekker-booking-service
+    container_name: booking-service
     ports:
-      - "8084:8080"
-    volumes:
-      - D:/Docker/Containers/trip-trekker-booking-service:/app
+      - "8082:8082"
     depends_on:
       - postgres
       - rabbitmq
-
-  trip-trekker-external-api:
-    build:
-      context: ./external-api-service
-      dockerfile: Dockerfile
-    container_name: trip-trekker-external-api
-    ports:
-      - "8085:8080"
-    volumes:
-      - D:/Docker/Containers/trip-trekker-external-api:/app
-
-  trip-trekker-flight-search:
-    build:
-      context: ./flight-search-service
-      dockerfile: Dockerfile
-    container_name: trip-trekker-flight-search
-    ports:
-      - "8086:8080"
-    volumes:
-      - D:/Docker/Containers/trip-trekker-flight-search:/app
-
-  trip-trekker-hotel-search:
-    build:
-      context: ./hotel-search-service
-      dockerfile: Dockerfile
-    container_name: trip-trekker-hotel-search
-    ports:
-      - "8087:8080"
-    volumes:
-      - D:/Docker/Containers/trip-trekker-hotel-search:/app
-
-  trip-trekker-notification-service:
-    build:
-      context: ./notification-service
-      dockerfile: Dockerfile
-    container_name: trip-trekker-notification-service
-    ports:
-      - "8088:8080"
-    volumes:
-      - D:/Docker/Containers/trip-trekker-notification-service:/app
-    depends_on:
-      - postgres
-      - rabbitmq
-
-  trip-trekker-payment-service:
-    build:
-      context: ./payment-service
-      dockerfile: Dockerfile
-    container_name: trip-trekker-payment-service
-    ports:
-      - "8089:8080"
-    volumes:
-      - D:/Docker/Containers/trip-trekker-payment-service:/app
-    depends_on:
-      - postgres
-      - rabbitmq
-
-  trip-trekker-validation-service:
+    networks:
+      - app-network
+#
+#  external-api:
+#    build:
+#      context: ./external-api-service
+#      dockerfile: Dockerfile
+#    container_name: external-api
+#    ports:
+#      - "8083:8083"
+#    volumes:
+#      - D:/Docker/Data/trip-trekker/external-api:/app
+#
+#  flight-search:
+#    build:
+#      context: ./flight-search-service
+#      dockerfile: Dockerfile
+#    container_name: flight-search
+#    ports:
+#      - "8084:8084"
+#    volumes:
+#      - D:/Docker/Data/trip-trekker/flight-search:/app
+#
+#  hotel-search:
+#    build:
+#      context: ./hotel-search-service
+#      dockerfile: Dockerfile
+#    container_name: hotel-search
+#    ports:
+#      - "8085:8085"
+#    volumes:
+#      - D:/Docker/Data/trip-trekker/hotel-search:/app
+#
+#  notification-service:
+#    build:
+#      context: ./notification-service
+#      dockerfile: Dockerfile
+#    container_name: notification-service
+#    ports:
+#      - "8086:8086"
+#    volumes:
+#      - D:/Docker/Data/trip-trekker/notification-service:/app
+#    depends_on:
+#      - postgres
+#      - rabbitmq
+#
+#  payment-service:
+#    build:
+#      context: ./payment-service
+#      dockerfile: Dockerfile
+#    container_name: payment-service
+#    ports:
+#      - "8087:8087"
+#    volumes:
+#      - D:/Docker/Data/trip-trekker/payment-service:/app
+#    depends_on:
+#      - postgres
+#      - rabbitmq
+#
+  validation-service:
     build:
       context: ./validation-service
       dockerfile: Dockerfile
-    container_name: trip-trekker-validation-service
+    container_name: validation-service
     ports:
-      - "8090:8080"
-    volumes:
-      - D:/Docker/Containers/trip-trekker-validation-service:/app
+      - "8088:8088"
     depends_on:
       - postgres
       - rabbitmq
+    networks:
+      - app-network
 
-volumes:
-  postgres-data:
+
+networks:
+  app-network:
+    driver: bridge
+
