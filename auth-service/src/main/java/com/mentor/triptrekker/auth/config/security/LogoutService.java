@@ -1,5 +1,6 @@
 package com.mentor.triptrekker.auth.config.security;
 
+import com.mentor.triptrekker.auth.model.Token;
 import com.mentor.triptrekker.auth.repository.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,15 +20,15 @@ public class LogoutService implements LogoutHandler {
     public void logout(
             HttpServletRequest request,
             HttpServletResponse response,
-            Authentication authentication
-    ) {
+            Authentication authentication) {
+
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
             return;
         }
         jwt = authHeader.substring(7);
-        var storedToken = tokenRepository.findByToken(jwt)
+        Token storedToken = tokenRepository.findByToken(jwt)
                 .orElse(null);
         if (storedToken != null) {
             storedToken.setExpired(true);

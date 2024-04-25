@@ -19,7 +19,7 @@ public class ValidationServiceController {
     private final ValidationService validationService;
     @PostMapping("/flight")
     public ResponseEntity<?> validateBookingData(@Valid @RequestBody FlightBookingData bookingData) {
-        validationService.validateBooking(bookingData);
+        validationService.sendBookingRequestToBookingQueue(bookingData);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

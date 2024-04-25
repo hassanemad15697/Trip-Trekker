@@ -27,7 +27,7 @@ public class RequestValidationService {
     }
     private boolean callValidationService(Object requestToValidate, ValidationType validationType) {
         ResponseEntity<?> response = restTemplate.postForEntity(
-                "http://localhost:8080/v1/" + validationType.getValue(),
+                "http://validation-service:8088/v1/" + validationType.getValue(),
                 requestToValidate,
                 Boolean.class
         );

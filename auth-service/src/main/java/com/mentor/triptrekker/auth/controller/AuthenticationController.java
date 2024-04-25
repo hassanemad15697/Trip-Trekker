@@ -14,23 +14,21 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.security.Principal;
 
+import static com.mentor.triptrekker.auth.config.security.SecurityConstants.BASE_AUTH_URL;
+
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(BASE_AUTH_URL)
 @RequiredArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
-    ) {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(service.register(request));
     }
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
-    ) {
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
@@ -41,11 +39,8 @@ public class AuthenticationController {
     ) throws IOException {
         service.refreshToken(request, response);
     }
-    @PatchMapping
-    public ResponseEntity<?> changePassword(
-            @RequestBody ChangePasswordRequest request,
-            Principal connectedUser
-    ) {
+    @PatchMapping("change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request, Principal connectedUser) {
         service.changePassword(request, connectedUser);
         return ResponseEntity.ok().build();
     }
