@@ -67,8 +67,6 @@ services:
 #    container_name: external-api
 #    ports:
 #      - "8083:8083"
-#    volumes:
-#      - D:/Docker/Data/trip-trekker/external-api:/app
 #
 #  flight-search:
 #    build:
