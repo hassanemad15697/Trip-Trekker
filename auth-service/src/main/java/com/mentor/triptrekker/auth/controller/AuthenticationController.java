@@ -1,8 +1,8 @@
 package com.mentor.triptrekker.auth.controller;
 
-import com.mentor.triptrekker.auth.request.AuthenticationRequest;
-import com.mentor.triptrekker.auth.request.ChangePasswordRequest;
-import com.mentor.triptrekker.auth.request.RegisterRequest;
+import com.mentor.triptrekker.auth.request.auth.AuthenticationRequest;
+import com.mentor.triptrekker.auth.request.auth.ChangePasswordRequest;
+import com.mentor.triptrekker.auth.request.auth.RegisterRequest;
 import com.mentor.triptrekker.auth.response.AuthenticationResponse;
 import com.mentor.triptrekker.auth.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;

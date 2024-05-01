@@ -1,4 +1,4 @@
-package com.mentor.triptrekker.auth.request;
+package com.mentor.triptrekker.auth.request.auth;
 
 
 import lombok.Builder;

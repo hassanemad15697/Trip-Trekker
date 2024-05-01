@@ -24,7 +24,7 @@ public class FlightBooking {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "flight_offer_id")
-    private FlightOffer flightOffer;
+    private FlightOffer data;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dictionaries_id")
@@ -36,6 +36,8 @@ public class FlightBooking {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_data_id")
     private PaymentData paymentData;
+
+    private Integer userId;
 
     @Enumerated(EnumType.STRING)
     private BookingStatus status;

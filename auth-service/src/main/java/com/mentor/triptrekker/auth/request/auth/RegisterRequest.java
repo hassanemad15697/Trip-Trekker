@@ -1,4 +1,4 @@
-package com.mentor.triptrekker.auth.request;
+package com.mentor.triptrekker.auth.request.auth;
 
 import com.mentor.triptrekker.auth.model.ROLE;
 import lombok.AllArgsConstructor;

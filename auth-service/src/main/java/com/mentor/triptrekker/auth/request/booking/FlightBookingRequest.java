@@ -1,4 +1,4 @@
-package com.mentor.triptrekker.booking.request;
+package com.mentor.triptrekker.auth.request.booking;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -14,7 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FlightBookingData {
+public class FlightBookingRequest {
     @NotNull
     @Valid
     private FlightOffer data;
@@ -29,25 +29,25 @@ public class FlightBookingData {
 
     @NotNull
     @Valid
-    private PaymentData paymentData;
+    private PaymentMethod paymentMethod;
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class PaymentData {
-        @NotBlank
-        @Pattern(regexp = "^[0-9]{16}$", message = "Invalid card number format")
-        private String cardNumber;
-
-        @NotBlank
-        @Pattern(regexp = "^(0[1-9]|1[0-2])/[0-9]{2}$", message = "Invalid expiration date format")
-        private String expireDate;
-
-        @NotBlank
-        @Size(min = 3, max = 3, message = "CVC must be 3 digits")
-        private String CVC;
-    }
+//    @Data
+//    @NoArgsConstructor
+//    @AllArgsConstructor
+//    @Builder
+//    public static class PaymentData {
+//        @NotBlank
+//        @Pattern(regexp = "^[0-9]{16}$", message = "Invalid card number format")
+//        private String cardNumber;
+//
+//        @NotBlank
+//        @Pattern(regexp = "^(0[1-9]|1[0-2])/[0-9]{2}$", message = "Invalid expiration date format")
+//        private String expireDate;
+//
+//        @NotBlank
+//        @Size(min = 3, max = 3, message = "CVC must be 3 digits")
+//        private String CVC;
+//    }
 
     @Data
     @NoArgsConstructor

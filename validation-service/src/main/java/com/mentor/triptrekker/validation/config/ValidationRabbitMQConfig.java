@@ -1,6 +1,7 @@
 package com.mentor.triptrekker.validation.config;
 
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,28 +14,34 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 @Configuration
 public class ValidationRabbitMQConfig {
 
-    public static final String QUEUE = "validationQueue";
-    public static final String EXCHANGE = "validationExchange";
-    public static final String KEY = "validationKey";
+    public static final String VALIDATION_QUEUE = "validationQueue";
+    public static final String VALIDATION_EXCHANGE = "validationExchange";
+    public static final String VALIDATION_KEY = "validationKey";
 
     @Bean
-    Queue bookingQueue() {
-        return new Queue(QUEUE, false);
+    Queue validationQueue() {
+        return new Queue(VALIDATION_QUEUE, true, false, false);
     }
 
     @Bean
-    DirectExchange bookingExchange() {
-        return new DirectExchange(EXCHANGE);
+    DirectExchange validationExchange() {
+        return new DirectExchange(VALIDATION_EXCHANGE);
     }
 
     @Bean
-    Binding bookingBinding(@Qualifier("bookingQueue")Queue bookingQueue,  @Qualifier("bookingExchange") DirectExchange bookingExchange) {
-        return BindingBuilder.bind(bookingQueue).to(bookingExchange).with(KEY);
+    Binding validationBinding(@Qualifier("validationQueue")Queue validationQueue,  @Qualifier("validationExchange") DirectExchange validationExchange) {
+        return BindingBuilder.bind(validationQueue).to(validationExchange).with(VALIDATION_KEY);
     }
     @Bean
     public RabbitTemplate validationRabbitTemplate(final ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(validationMessageConverter());
+        rabbitTemplate.setConfirmCallback((CorrelationData correlationData, boolean ack, String cause) -> {
+            if (!ack) {
+                System.out.println("Message with CorrelationData " + correlationData + " failed with cause " + cause);
+            }
+        });
+        System.out.println("validationRabbitTemplate");
         return rabbitTemplate;
     }
 

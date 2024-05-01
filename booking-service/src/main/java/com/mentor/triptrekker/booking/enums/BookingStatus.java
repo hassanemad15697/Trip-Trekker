@@ -1,6 +1,10 @@
 package com.mentor.triptrekker.booking.enums;
 
+import jakarta.annotation.Resource;
+
 public enum BookingStatus {
     UNCONFIRMED,
-    CONFINRMED,
+    CONFIRMED,
+    PAYMENT_FAILURE,
+    PAYMENT_CANCELLED;
 }

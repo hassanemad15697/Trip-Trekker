@@ -1,6 +1,7 @@
 package com.mentor.triptrekker.auth.controller;
 
-import com.mentor.triptrekker.auth.service.RequestValidationService;
+import com.mentor.triptrekker.auth.request.booking.FlightBookingRequest;
+import com.mentor.triptrekker.auth.service.RequestBookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +16,10 @@ import static com.mentor.triptrekker.auth.model.ValidationType.BOOKING_FLIGHT;
 @RequiredArgsConstructor
 public class BookingController {
 
-    private final RequestValidationService requestValidationService;
+    private final RequestBookingService requestBookingService;
+
     @PostMapping("/flight")
-    public ResponseEntity<?> startBooking(@RequestBody Object bookingRequest) {
-        return requestValidationService.forwardToValidateService(bookingRequest,BOOKING_FLIGHT );
+    public ResponseEntity<?> startBooking(@RequestBody FlightBookingRequest bookingRequest) {
+        return requestBookingService.forwardToBookingService(bookingRequest,BOOKING_FLIGHT );
     }
 }

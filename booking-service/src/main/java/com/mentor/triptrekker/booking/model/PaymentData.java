@@ -1,10 +1,8 @@
 package com.mentor.triptrekker.booking.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.mentor.triptrekker.booking.request.PaymentMethod;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,10 +18,13 @@ public class PaymentData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String cardNumber;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+    Double total;
+    String currency;
+    String method;
+    String description;
+    String intent;
 
-    private String expireDate;
-
-    private String CVC;
 }
 
