@@ -2,6 +2,7 @@ package com.mentor.triptrekker.externalapi.service;
 
 
 import com.mentor.triptrekker.externalapi.exception.FlightSearchException;
+import com.mentor.triptrekker.externalapi.request.FlightPricingRequest;
 import com.mentor.triptrekker.externalapi.request.FlightRequest;
 import com.mentor.triptrekker.externalapi.response.AccessTokenResponse;
 import com.mentor.triptrekker.externalapi.response.FlightOfferResponse;
@@ -51,30 +52,36 @@ public class ExternalApiService {
     }
 
     public Mono<FlightOfferResponse> searchFlights(FlightRequest request) {
-        return getAccessToken().flatMap(token -> {
-            return externalWebClient.get()
-                    .uri(uriBuilder -> uriBuilder.path("shopping/flight-offers")
-                            .queryParam("originLocationCode", request.getOriginLocationCode())
-                            .queryParam("destinationLocationCode", request.getDestinationLocationCode())
-                            .queryParam("departureDate", request.getDepartureDate())
-                            .queryParam("returnDate", request.getReturnDate())
-                            .queryParam("adults", request.getAdults())
-                            .queryParam("children", request.getChildren())
-                            .queryParam("infants", request.getInfants())
-                            .queryParam("travelClass", request.getTravelClass())
-                            .queryParam("nonStop", request.getNonStop())
-                            .queryParam("currencyCode", request.getCurrencyCode())
-                            .queryParam("maxPrice", request.getMaxPrice())
-                            .queryParam("max", request.getMax())
-                            .build())
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                    .retrieve()
-                    .bodyToMono(FlightOfferResponse.class)
-                    .onErrorResume(e -> {
-//                        log.error("Error fetching flight data: {} \n {}", e.getMessage(), e.getStackTrace());
-                        return Mono.error(new FlightSearchException("Error fetching flight data. : " + e.getMessage()));
-                    });
-        });
+        return getAccessToken().flatMap(token -> externalWebClient.get()
+                .uri(uriBuilder -> uriBuilder.path("v2/shopping/flight-offers")
+                        .queryParam("originLocationCode", request.getOriginLocationCode())
+                        .queryParam("destinationLocationCode", request.getDestinationLocationCode())
+                        .queryParam("departureDate", request.getDepartureDate())
+                        .queryParam("returnDate", request.getReturnDate())
+                        .queryParam("adults", request.getAdults())
+                        .queryParam("children", request.getChildren())
+                        .queryParam("infants", request.getInfants())
+                        .queryParam("travelClass", request.getTravelClass())
+                        .queryParam("nonStop", request.getNonStop())
+                        .queryParam("currencyCode", request.getCurrencyCode())
+                        .queryParam("maxPrice", request.getMaxPrice())
+                        .queryParam("max", request.getMax())
+                        .build())
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .retrieve()
+                .bodyToMono(FlightOfferResponse.class)
+                .onErrorResume(e -> Mono.error(new FlightSearchException("Error fetching flight data. : " + e.getMessage()))));
+    }
+    public Mono<String> FlightPrice(FlightPricingRequest request) {
+        return getAccessToken().flatMap(token -> externalWebClient.post()
+                .uri(uriBuilder -> uriBuilder.path("v1/shopping/flight-offers/pricing")
+                        .build())
+                .bodyValue(request)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .header("X-HTTP-Method-Override", "GET")
+                .retrieve()
+                .bodyToMono(String.class)
+                .onErrorResume(e -> Mono.error(new FlightSearchException("Error fetching flight data. : " + e.getMessage()))));
     }
 
 }

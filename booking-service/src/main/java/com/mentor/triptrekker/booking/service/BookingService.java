@@ -5,6 +5,7 @@ import com.mentor.triptrekker.booking.model.FlightBooking;
 import com.mentor.triptrekker.booking.repository.BookingRepository;
 import com.mentor.triptrekker.booking.request.FlightBookingRequest;
 import com.mentor.triptrekker.booking.request.PaymentRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -23,6 +24,7 @@ public class BookingService {
 
     private final ModelMapper modelMapper;
 
+    @Transactional
     public HttpStatusCode processBooking(FlightBookingRequest bookingData, Integer userId) {
         // check if any available seats
         // if yes.
