@@ -32,7 +32,7 @@ public class FlightPricingRequest {
     @Builder
     public static class FlightOffer {
         private String type;
-        private String id;
+        private Integer id;
         private String source;
         private boolean instantTicketingRequired;
         private boolean nonHomogeneous;
